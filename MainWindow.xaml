@@ -1,0 +1,39 @@
+﻿<Window x:Class="Notes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Notes"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Name="SettingsDefinition" Height="*"></RowDefinition>
+            <RowDefinition Name="InputDefinition" Height="10*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Name="SettingsGrid" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ComboBox Grid.Column="0" Name="FontFamilyBox" SelectionChanged="FontFamilySelectionChanged">
+                <TextBox>Times New Roman</TextBox>
+                <TextBox>Comic Sans MS</TextBox>
+                <TextBox>Arial</TextBox>
+            </ComboBox>
+            <ComboBox Grid.Column="1" Name="FontSizeBox" SelectionChanged="FontSizeSelectionChanged"></ComboBox>
+            <ComboBox Grid.Column="2" Name="FontColorBox" SelectionChanged="FontColorSelectionChanged">
+                <TextBox>Black</TextBox>
+                <TextBox>Red</TextBox>
+                <TextBox>Yellow</TextBox>
+                <TextBox>Blue</TextBox>
+                <TextBox>Green</TextBox>
+                <TextBox>Pink</TextBox>
+            </ComboBox>
+            <Button Grid.Column="3" Name="SaveButton" Click="SaveNotes">Save</Button>
+        </Grid>
+        <TextBox Name="NotingField" Grid.Row="1" FontFamily="Times New Roman" FontSize="14" TextWrapping="Wrap" AcceptsReturn="True">Write your notes here</TextBox>
+    </Grid>
+</Window>
