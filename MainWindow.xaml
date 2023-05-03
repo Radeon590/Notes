@@ -17,6 +17,8 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <ComboBox Grid.Column="0" Name="FontFamilyBox" SelectionChanged="FontFamilySelectionChanged">
                 <TextBox>Times New Roman</TextBox>
@@ -33,6 +35,8 @@
                 <TextBox>Pink</TextBox>
             </ComboBox>
             <Button Grid.Column="3" Name="SaveButton" Click="SaveNotes">Save</Button>
+            <Button Grid.Column="4" Name="SaveAsButton" Click="SaveAs">SaveAs</Button>
+            <Button Grid.Column="5" Name="OpenButton" Click="Open">Open</Button>
         </Grid>
         <TextBox Name="NotingField" Grid.Row="1" FontFamily="Times New Roman" FontSize="14" TextWrapping="Wrap" AcceptsReturn="True">Write your notes here</TextBox>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -12,6 +13,8 @@ namespace Notes
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string _openedFile = "";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,8 +35,6 @@ namespace Notes
                 FontColorBox.SelectedItem = FontColorBox.Items[0];
             else
                 NotingField.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(File.ReadAllText(@"FontColorSettings")));
-            if (File.Exists(@"Source")) 
-                NotingField.Text = File.ReadAllText(@"Source");
         }
 
         private void FontFamilySelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,10 +60,51 @@ namespace Notes
 
         private void SaveNotes(object sender, RoutedEventArgs e)
         {
-            var alphabit = new string[]{ "a", "b", "c", "d"};
-            string notes = Regex.Replace(NotingField.Text, @"^\s*$\n|\r", string.Empty, RegexOptions.Multiline).TrimEnd();
-            NotingField.Text = notes;
-            File.WriteAllText(@"Source", NotingField.Text);
+            if(_openedFile != "")
+            {
+                File.WriteAllText(_openedFile, NotingField.Text);
+            }
+            else
+            {
+                SaveAs(sender, e);
+            }
+        }
+
+        private void SaveAs(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog();
+            dialog.FileName = "Document";
+            dialog.DefaultExt = ".txt";
+            dialog.Filter = "Text documents (.txt)|*.txt";
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                SetOpenedFile(dialog);
+                File.WriteAllText(dialog.FileName, NotingField.Text);
+            }
+        }
+
+        private void Open(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.FileName = "Document";
+            dialog.DefaultExt = ".txt";
+            dialog.Filter = "Text documents (.txt)|*.txt";
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                NotingField.Text = File.ReadAllText(dialog.FileName);
+                SetOpenedFile(dialog);
+            }
+        }
+
+        private void SetOpenedFile(FileDialog dialog)
+        {
+            _openedFile = dialog.FileName;
+            var filePathSplitted = dialog.FileName.Split('\\');
+            Title = filePathSplitted[filePathSplitted.Length - 1].Split('.')[0];
         }
     }
 }
