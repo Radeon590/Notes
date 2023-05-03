@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,22 +18,7 @@ namespace Notes
         {
             InitializeComponent();
             //
-            for(int i = 1; i < 101; i++)
-            {
-                FontSizeBox.Items.Add(new TextBox() { Text = i.ToString() });
-            }
-            if(!File.Exists(@"FontSizeSettings"))
-                FontSizeBox.SelectedItem = FontSizeBox.Items[20];
-            else
-                NotingField.FontSize = Convert.ToDouble(File.ReadAllText(@"FontSizeSettings"));
-            if (!File.Exists(@"FontFamilySettings"))
-                FontFamilyBox.SelectedItem = FontFamilyBox.Items[0];
-            else
-                NotingField.FontFamily = new FontFamily(File.ReadAllText(@"FontFamilySettings"));
-            if (!File.Exists(@"FontColorSettings"))
-                FontColorBox.SelectedItem = FontColorBox.Items[0];
-            else
-                NotingField.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(File.ReadAllText(@"FontColorSettings")));
+            LoadTextStyleSettings();
         }
 
         private void FontFamilySelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -105,6 +89,26 @@ namespace Notes
             _openedFile = dialog.FileName;
             var filePathSplitted = dialog.FileName.Split('\\');
             Title = filePathSplitted[filePathSplitted.Length - 1].Split('.')[0];
+        }
+
+        private void LoadTextStyleSettings()
+        {
+            for (int i = 1; i < 101; i++)
+            {
+                FontSizeBox.Items.Add(new TextBox() { Text = i.ToString() });
+            }
+            if (!File.Exists(@"FontSizeSettings"))
+                FontSizeBox.SelectedItem = FontSizeBox.Items[20];
+            else
+                NotingField.FontSize = Convert.ToDouble(File.ReadAllText(@"FontSizeSettings"));
+            if (!File.Exists(@"FontFamilySettings"))
+                FontFamilyBox.SelectedItem = FontFamilyBox.Items[0];
+            else
+                NotingField.FontFamily = new FontFamily(File.ReadAllText(@"FontFamilySettings"));
+            if (!File.Exists(@"FontColorSettings"))
+                FontColorBox.SelectedItem = FontColorBox.Items[0];
+            else
+                NotingField.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(File.ReadAllText(@"FontColorSettings")));
         }
     }
 }
